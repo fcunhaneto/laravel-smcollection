@@ -41,4 +41,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function titles()
+    {
+        return $this->belongsToMany(Title::class, 'title_user','user_id', 'title_id')
+            ->withPivot('id', 'user_rating', 'user_channel', 'user_status', 'last_season', 'last_episode', 'user_trash')
+            ->withTimestamps();
+    }
 }

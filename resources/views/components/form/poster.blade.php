@@ -1,0 +1,1 @@
+<input id="poster" name="poster" class="form-control" type="file">
