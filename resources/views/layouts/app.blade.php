@@ -41,7 +41,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarSeries">
                                 <li><a class="dropdown-item" href="#">Todas</a></li>
-                                <li><a class="dropdown-item" href="#">Adicionar</a></li>
+                                <li><a class="dropdown-item" href="{{ route('users.create', ['type' => 'series']) }}">Adicionar</a></li>
                             </ul>
                         </li>
                         <ul class="navbar-nav me-auto">
@@ -52,7 +52,7 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarMovies">
                                     <li><a class="dropdown-item" href="#">Todas</a></li>
-                                    <li><a class="dropdown-item" href="#">Adicionar</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('users.create', ['type' => 'filmes']) }}">Adicionar</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -82,7 +82,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     @can('isCollaborator')
-                                        <a class="dropdown-item" href="#">Admin</a>
+                                        <a class="dropdown-item" href="{{ route('admin') }}">Admin</a>
                                     @endcan
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

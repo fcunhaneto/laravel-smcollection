@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container">
@@ -31,7 +31,7 @@
                 <tbody>
                 @if(!$titles->isEmpty())
                     @foreach($titles as $title)
-                    <tr>
+                        <tr>
                         <td class="text-center">
                             <a href="{{ url('/posters/' . $title->poster) }}">
                                 <img src="{{ url('/posters/' . $title->poster) }}" class="rounded" width="88" height="132"
@@ -39,7 +39,7 @@
                             </a>
                         </td>
                         <td class="text-center">
-                            <a href="{{ route('admin.show', ['id' => $title->id]) }}" class="normal-link fw-bolder">
+                            <a href="#" class="normal-link fw-bolder">
                                 {{ $title->title }}
                             </a>
                         </td>
@@ -59,17 +59,9 @@
                                class="btn btn-primary btn-sm">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <button class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#addModal-{{ $title->id }}">
-                                <i class="bi bi-plus-lg"></i>
-                            </button>
-                            <x-modal.user-add :title="$title" :type="$type" page="admin" />
-                            <a href="#" type="button" role="button" class="btn btn-danger btn-sm">
-                                <i class="bi bi-trash"></i>
-                            </a>
                         </td>
                     </tr>
-                @endforeach
+                    @endforeach
                 @endif
                 </tbody>
             </table>

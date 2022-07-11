@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TitleController;
 use App\Http\Controllers\TitleUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,13 +23,18 @@ Route::get('/', function () {
 });
 
 Route::controller(TitleUserController::class)->group(function () {
-    Route::get('/{type}', 'index')->where('type', 'series|filmes')->name('user.home');
-    Route::get('/add/{type}', 'create')->where('type', 'series|filmes')->name('user.create');
+    Route::get('/{type}', 'index')->where('type', 'series|filmes')->name('users.index');
+    Route::get('/adicionar/titulo/{type}', 'addTitle')->where('type', 'series|filmes')->name('users.create');
+    Route::post('/armazenar/titulo', 'userStoreOrUpdate')->name('users.store');
 });
 
 Route::controller(TitleController::class)->group(function () {
     Route::get('/admin', 'index')->name('admin');
     Route::get('/admin/{type}', 'index')->where('type', 'series|filmes')->name('admin.index');
+    Route::get('/admin/criar/{type}', 'create')->where('type', 'serie|filme')->name('admin.create');
+    Route::post('/admin/armazenar', 'store')->name('admin.store');
+    Route::get('/admin/editar/{id}', 'edit')->where('id', '[0-9]+')->name('admin.edit');
+    Route::put('/admin/update', 'update')->name('admin.update');
 });
 
 Auth::routes();

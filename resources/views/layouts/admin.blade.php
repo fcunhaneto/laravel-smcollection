@@ -23,8 +23,8 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+            <a class="navbar-brand" href="{{ url('/admin') }}">
+                SMCollection Admin
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -40,8 +40,8 @@
                             Séries
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarSeries">
-                            <li><a class="dropdown-item" href="#">Todas</a></li>
-                            <li><a class="dropdown-item" href="#">Nova</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.index', ['type' => 'series']) }}">Todas</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.create', ['type' => 'serie']) }}">Nova</a></li>
                         </ul>
                     </li>
                     <ul class="navbar-nav me-auto">
@@ -51,8 +51,8 @@
                                 Filmes
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarMovies">
-                                <li><a class="dropdown-item" href="#">Todos</a></li>
-                                <li><a class="dropdown-item" href="#">Novo</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.index', ['type' => 'filmes']) }}">Todos</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.create', ['type' => 'filme']) }}">Novo</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -68,6 +68,7 @@
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUser">
+                            <a class="dropdown-item" href="{{ route('user.home', ['type' => 'series']) }}">Home</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

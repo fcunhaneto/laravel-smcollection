@@ -40,7 +40,7 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.show', ['id' => $title->id]) }}" class="normal-link fw-bolder">
+                                <a href="#" class="normal-link fw-bolder">
                                     {{ $title->title }}
                                 </a>
                             </td>

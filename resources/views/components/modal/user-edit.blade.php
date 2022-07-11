@@ -10,23 +10,23 @@
                     <i class="bi bi-x"></i>
                 </button>
             </div>
-            <?php
-                dump($type);
-                $t = substr($type, 0, -1);
-            ?>
-            <form method="post" action="#">
+            <form method="post" action="{{ route('users.store') }}">
                 @csrf
-                @method('PUT')
+                <?php
+                    $titles_user = $title->users()->get();
+                ?>
                 <input type="text" name="id" value="{{ $title->id }}" hidden>
+                <input type="text" name="type" value="{{ $type }}" hidden>
                 <div class="modal-body">
                     <table class="table">
                         <tbody>
+                        @foreach($titles_user as $title_user)
                             <tr class="border-bottom">
                                 <td class="pe-2">
                                     <label class="form-label">Canal</label>
                                 </td>
                                 <td class="py-2">
-                                    <x-form.user-channel :actual="$title->user_channel" />
+                                    <x-form.user-channel :actual="'Netflix'" />
                                 </td>
                             </tr>
                             <tr class="border-bottom">
@@ -34,7 +34,7 @@
                                     <label class="form-label">Status</label>
                                 </td>
                                 <td class="py-2">
-                                    <x-form.user-status :type="$type" :actual="$title->user_status" />
+                                    <x-form.user-status :type="$type" :actual="$title_user->pivot->user_status" />
                                 </td>
                             </tr>
                             <tr class="border-bottom">
@@ -42,7 +42,7 @@
                                     <label class="form-label">Classificação</label>
                                 </td>
                                 <td class="py-2">
-                                    <x-form.user-rating :rating="$title->user_rating" />
+                                    <x-form.user-rating :rating="$title_user->pivot->user_rating" />
                                 </td>
                             </tr>
                             @if(!$title->is_movie)
@@ -56,7 +56,7 @@
                                         <label class="form-label">Temporada</label>
                                     </td>
                                     <td class="py-2">
-                                        <x-form.last-season :last="$title->last_season" />
+                                        <x-form.last-season :last="$title_user->pivot->last_season" />
                                     </td>
                                 </tr>
                                 <tr class="border-bottom">
@@ -64,10 +64,12 @@
                                         <label class="form-label">Episódio</label>
                                     </td>
                                     <td class="py-2">
-                                        <x-form.last-episode :last="$title->last_episode" />
+                                        <x-form.last-episode :last="$title_user->pivot->last_episode" />
                                     </td>
                                 </tr>
                             @endif
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>

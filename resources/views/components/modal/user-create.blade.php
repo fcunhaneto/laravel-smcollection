@@ -11,9 +11,10 @@
                     <i class="bi bi-x"></i>
                 </button>
             </div>
-            <form method="post" action="#">
+            <form method="post" action="{{ route('users.store') }}">
                 @csrf
                 <input type="text" name="id" value="{{ $title->id }}" hidden>
+                <input type="text" name="type" value="{{ $type }}" hidden>
                 <div class="modal-body">
                     <table class="table">
                         <tbody>
