@@ -17,7 +17,7 @@ class TitleUserController extends Controller
      */
     public function index($type = 'series')
     {
-        if ( Gate::allows('isCollaborator') ) {
+        if ( Gate::allows('isSubscriber') ) {
             $bool = $type === 'filmes';
             $titles = Title::where('titles.is_movie', $bool)
                 ->join('title_user', 'titles.id', '=', 'title_user.title_id')
