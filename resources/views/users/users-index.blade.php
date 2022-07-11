@@ -25,48 +25,65 @@
                                     {{ $title->year }}
                                     <span class="ms-3">
                                     @if($title->is_movie)
-                                            {{ substr($title->movie_duration ,0 ,5) }}
-                                        @else
-                                            Temporadas: {{ $title->series_seasons }} | {{ $title->series_situation }}
+                                        {{ substr($title->movie_duration ,0 ,5) }}
+                                    @else
+                                        @if($title->last_season > 0)
+                                            <span>
+                                            temporada - {{ $title->last_season }} | episódio - {{ $title->last_episode }}
+                                            </span>
                                         @endif
+                                    @endif
                                 </span>
-                                </p>
-                                <p class="titles-text mb-1 fs-09">{{ $title->user_status }}</p>
-                                @if($title->is_series && ($title->last_season > 0))
-                                    <p class="titles-text mb-1 fs-09">
-                                        temporada - {{ $title->last_season }} | episódio - {{ $title->last_episode }}
-                                    </p>
-                                @endif
-
-                                <p class="titles-text mb-1 fs-09">
-                                    <?php
-                                    $channels = explode(',', $title->title_channels);
-                                    ?>
-                                    @foreach($channels as $channel)
-                                        @if ($loop->last)
-                                            {{ $channel }}
-                                        @else
-                                            {{ $channel }}&nbsp;|
-                                        @endif
-
-                                    @endforeach
-                                </p>
-                                <p class="titles-text mb-1 fs-09">
-                                    <?php
-                                    $categories = explode(',', $title->title_categories);
-                                    ?>
-                                    @foreach($categories as $category)
-                                        @if ($loop->last)
-                                            {{ $category }}
-                                        @else
-                                            {{ $category }}&nbsp;|
-                                        @endif
-
-                                    @endforeach
                                 </p>
                             </div>
                         </div>
                         <div class="border border-1 border-dark rounded-bottom">
+                            <div class="accordion accordion-flush" id="accordionInfo">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headinginfo-{{ $title->id }}">
+                                        <button class="accordion-button collapsed media-fs" type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#flush-collapse-info-{{ $title->id }}" aria-expanded="false"
+                                                aria-controls="flush-collapseOne">
+                                            Mais Informação
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapse-info-{{ $title->id }}" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-heading-info-{{ $title->id }}"
+                                         data-bs-parent="#accordionInfo">
+                                        <div class="accordion-body media-fs">
+                                            <table class="table align-middle table-striped table-bordered">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Status:</td>
+                                                    <td>{{ $title->user_status }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Canal:</td>
+                                                    <td>{{ $title->user_channel }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Categorias:</td>
+                                                    <td>
+                                                        <?php
+                                                        $categories = explode(',', $title->title_categories);
+                                                        ?>
+                                                        @foreach($categories as $category)
+                                                            @if ($loop->last)
+                                                                {{ $category }}
+                                                            @else
+                                                                {{ $category }},&nbsp
+                                                            @endif
+
+                                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="accordion accordion-flush" id="accordionSummary">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="flush-heading-{{ $title->id }}">
