@@ -61,7 +61,7 @@ class TitleController extends Controller
             $this->saveOrUpdateTitle($request, $title, $type);
 
             $type .= 's';
-            return redirect()->route('user.add', ['type' => $type]);
+            return redirect()->route('users.create', ['type' => $type]);
         }
 
         abort(403);

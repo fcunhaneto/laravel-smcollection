@@ -18,7 +18,7 @@
             </div>
             <div class="col-12 col-lg-8">
                 @if($title)
-                    <form method="post" action="{{ route('admin.update') }}">
+                    <form method="post" action="{{ route('admin.update') }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <input type="text" name="type" value="{{ $type }}" hidden>
