@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('series_seasons')->nullable();
             $table->enum('series_situation', ['Renovada', 'Finalizada', 'Cancelada'])->nullable();
             $table->time('movie_duration')->nullable();
+            $table->unsignedTinyInteger('title_rating')->default(0);
             $table->string('title_categories')->nullable();
             $table->string('title_channels')->nullable();
             $table->string('title_countries')->nullable();

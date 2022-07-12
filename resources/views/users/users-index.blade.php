@@ -25,15 +25,21 @@
                                     {{ $title->year }}
                                     <span class="ms-3">
                                     @if($title->is_movie)
-                                        {{ substr($title->movie_duration ,0 ,5) }}
-                                    @else
-                                        @if($title->last_season > 0)
-                                            <span>
+                                            {{ substr($title->movie_duration ,0 ,5) }}
+                                        @else
+                                            @if($title->last_season > 0)
+                                                <span>
                                             temporada - {{ $title->last_season }} | episódio - {{ $title->last_episode }}
                                             </span>
+                                            @endif
                                         @endif
-                                    @endif
                                 </span>
+                                </p>
+                                <p class="titles-text mb-1 fs-09">
+                                    {{ $title->user_channel }}
+                                </p>
+                                <p class="titles-text mb-1 fs-09">
+                                    <x-show.rating :rating="$title->user_rating"></x-show.rating>
                                 </p>
                             </div>
                         </div>
@@ -41,9 +47,10 @@
                             <div class="accordion accordion-flush" id="accordionInfo">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="flush-headinginfo-{{ $title->id }}">
-                                        <button class="accordion-button collapsed media-fs" type="button"
+                                        <button class="accordion-button collapsed fs-6" type="button"
                                                 data-bs-toggle="collapse"
-                                                data-bs-target="#flush-collapse-info-{{ $title->id }}" aria-expanded="false"
+                                                data-bs-target="#flush-collapse-info-{{ $title->id }}"
+                                                aria-expanded="false"
                                                 aria-controls="flush-collapseOne">
                                             Mais Informação
                                         </button>
@@ -52,15 +59,26 @@
                                          aria-labelledby="flush-heading-info-{{ $title->id }}"
                                          data-bs-parent="#accordionInfo">
                                         <div class="accordion-body media-fs">
-                                            <table class="table align-middle table-striped table-bordered">
+                                            <table class="table align-middle table-striped table-bordered fs-6">
                                                 <tbody>
                                                 <tr>
                                                     <td>Status:</td>
                                                     <td>{{ $title->user_status }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Canal:</td>
-                                                    <td>{{ $title->user_channel }}</td>
+                                                    <td>Canais:</td>
+                                                    <td>
+                                                        <?php
+                                                        $channels = explode(',', $title->title_channels);
+                                                        ?>
+                                                        @foreach($channels as $channel)
+                                                            @if ($loop->last)
+                                                                {{ $channel }}
+                                                            @else
+                                                                {{ $channel }},&nbsp
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Categorias:</td>
@@ -68,13 +86,12 @@
                                                         <?php
                                                         $categories = explode(',', $title->title_categories);
                                                         ?>
-                                                        @foreach($categories as $category)
+                                                        @foreach($categories as $channel)
                                                             @if ($loop->last)
-                                                                {{ $category }}
+                                                                {{ $channel }}
                                                             @else
-                                                                {{ $category }},&nbsp
+                                                                {{ $channel }},&nbsp
                                                             @endif
-
                                                         @endforeach
                                                     </td>
                                                 </tr>
@@ -87,7 +104,7 @@
                             <div class="accordion accordion-flush" id="accordionSummary">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="flush-heading-{{ $title->id }}">
-                                        <button class="accordion-button collapsed media-fs" type="button"
+                                        <button class="accordion-button collapsed fs-6" type="button"
                                                 data-bs-toggle="collapse"
                                                 data-bs-target="#flush-collapse-{{ $title->id }}" aria-expanded="false"
                                                 aria-controls="flush-collapseOne">
@@ -97,7 +114,7 @@
                                     <div id="flush-collapse-{{ $title->id }}" class="accordion-collapse collapse"
                                          aria-labelledby="flush-heading-{{ $title->id }}"
                                          data-bs-parent="#accordionSummary">
-                                        <div class="accordion-body media-fs">
+                                        <div class="accordion-body fs-6">
                                             {{ $title->summary }}
                                         </div>
                                     </div>

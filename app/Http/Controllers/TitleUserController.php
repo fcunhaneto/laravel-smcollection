@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Gate;
 class TitleUserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of user series or movie.
      *
      * @param string $type
      * @return \Illuminate\Contracts\View\View
@@ -33,18 +33,19 @@ class TitleUserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show a table with movies or series to user add it.
      *
+     * @param string $type
      * @return \Illuminate\Contracts\View\View
      */
-    public function addTitle($type): \Illuminate\Contracts\View\View
+    public function addTitle($type)
     {
         if( Gate::allows('isSubscriber') ) {
             $bool = $type === 'filmes';
             $user = auth()->user();
-            $series = Title::where('is_movie', $bool)->get();
+            $title = Title::where('is_movie', $bool)->get();
             $users = $user->titles()->where('titles.is_movie', $bool)->select('titles.*')->get();
-            $titles = $series->diff($users);
+            $titles = $title->diff($users);
 
             return view('users.users-add-title', compact('titles', 'type'));
         }
@@ -53,6 +54,8 @@ class TitleUserController extends Controller
     }
 
     /**
+     * Store or update user movie or serie.
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|void
      */
@@ -62,7 +65,8 @@ class TitleUserController extends Controller
             $title_user = TitleUser::where('title_id', $request->input('id'))->first();
             if ( !$title_user ) $title_user= new TitleUser();
 
-            $title_user->title_id = $request->input('id');
+            $id = $request->input('id');
+            $title_user->title_id = $id;
             $title_user->user_id = $user->id;
             $title_user->user_rating = $request->input('user_rating');
             $title_user->user_channel = $request->input('user_channel');
@@ -75,6 +79,14 @@ class TitleUserController extends Controller
 
             $title_user->save();
 
+            $rating = intval( Title::where('titles.id', $id)
+                ->leftJoin('title_user', 'titles.id', '=', 'title_user.title_id')
+                ->select('title_user.rating')
+                ->avg('title_user.rating')
+            );
+
+            Title::where('titles.id', $id)->update(['title_rating' => $rating]);
+
             return redirect()->route('users.index', ['type' => $request->input('type')]);
         }
     }
@@ -86,29 +98,6 @@ class TitleUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
     {
         //
     }
