@@ -54,12 +54,6 @@
                         <td class="text-center text-secondary">
                             <x-show.show3-c :c3="$title->title_categories" />
                         </td>
-                        <td class="text-center text-nowrap px-0">
-                            <a href="{{ route('admin.edit', ['id' => $title->id]) }}" type="button" role="button"
-                               class="btn btn-primary btn-sm">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                        </td>
                     </tr>
                     @endforeach
                 @endif
@@ -80,6 +74,5 @@
                 </div>
             @endforeach
         </div>
-
     </div>
 @endsection

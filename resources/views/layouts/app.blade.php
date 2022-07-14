@@ -40,7 +40,7 @@
                                 Séries
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarSeries">
-                                <li><a class="dropdown-item" href="{{ route('users.index', ['type' => 'series']) }}"">Todas</a></li>
+                                <li><a class="dropdown-item" href="{{ route('users.index', ['type' => 'series']) }}">Todas</a></li>
                                 <li><a class="dropdown-item" href="{{ route('users.create', ['type' => 'series']) }}">Adicionar</a></li>
                             </ul>
                         </li>

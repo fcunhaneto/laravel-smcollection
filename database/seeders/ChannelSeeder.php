@@ -25,7 +25,6 @@ class ChannelSeeder extends Seeder
             ['name' => 'Youtube'],
             ['name' => 'Pluto TV'],
             ['name' => 'Oldflix'],
-            ['name' => 'DVD Blu-ray'],
         ];
 
         Channel::insert($data);
